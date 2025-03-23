@@ -10,4 +10,9 @@ class Springboot3DemoApplicationTests {
     void contextLoads() {
     }
 
+    @Test
+    public void test() {
+        System.out.println("Spring Boot Test");
+    }
+
 }
