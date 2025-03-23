@@ -71,7 +71,7 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-            <!-- Spring Boot Maven 插件 -->
+            <!-- Spring Boot Maven 插件：可以通过 mvn spring-boot:run 命令启动项目 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

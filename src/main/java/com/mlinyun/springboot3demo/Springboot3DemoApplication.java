@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Springboot3DemoApplication {
 
     public static void main(String[] args) {
+        // 运行 run() 方法，项目就可以正常启动了
         SpringApplication.run(Springboot3DemoApplication.class, args);
     }
 
