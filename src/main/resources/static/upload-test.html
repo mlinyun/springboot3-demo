@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot 文件上传测试</title>
+</head>
+<body>
+<!--
+    文件上传的请求地址为/api/upload，请求方法为 post，
+    需要注意的是在文件上传时要设置 enctype="multipart/form-data"
+-->
+<form action="/api/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file"/>
+    <input type="submit" value="文件上传"/>
+</form>
+</body>
+</html>
