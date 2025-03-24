@@ -61,10 +61,16 @@
             <version>3.0.1</version>
         </dependency>
         <!-- 引入 Spring Boot 内嵌的 Tomcat 对 JSP 的解析包，不加解析不了 JSP 页面 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>compile</scope>
+        </dependency>-->
+        <!-- 注意：JSP 和 Thymeleaf 不建议混用，会出现问题  -->
+        <!-- Thymeleaf 模板引擎依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
 
