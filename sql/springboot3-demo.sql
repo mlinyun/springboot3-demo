@@ -1,0 +1,15 @@
+CREATE DATABASE IF NOT EXISTS `springboot3_db` DEFAULT CHARACTER SET utf8;
+
+USE `springboot3_db`;
+
+DROP TABLE IF EXISTS `tb_user`;
+
+CREATE TABLE `tb_user`
+(
+    `id`       INT(11)      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `name`     VARCHAR(100) NOT NULL DEFAULT '' COMMENT '登录名',
+    `password` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '密码',
+    PRIMARY KEY (`id`)
+) ENGINE = INNODB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8;
