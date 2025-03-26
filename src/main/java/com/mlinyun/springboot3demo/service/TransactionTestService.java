@@ -1,5 +1,6 @@
 package com.mlinyun.springboot3demo.service;
 
+import com.mlinyun.springboot3demo.utils.NameUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class TransactionTestService {
      */
     public boolean testWithoutTransaction() {
         // 生成一个随机用户名
-        String username = generateRandomUsername();
+        String username = NameUtils.generateRandomUsername();
         log.info("随机生成的用户名（没用事务）: {}", username);
         boolean res = tbUserService.userRegister(username, "12345678") > 0;
         // 发生异常
@@ -39,7 +40,7 @@ public class TransactionTestService {
      */
     @Transactional
     public boolean testWithTransaction() {
-        String username = generateRandomUsername();
+        String username = NameUtils.generateRandomUsername();
         log.info("随机生成的用户名（使用事务）: {}", username);
         boolean res = tbUserService.userRegister(username, "12345678") > 0;
         // 发生异常
@@ -47,19 +48,4 @@ public class TransactionTestService {
         return res;
     }
 
-    /**
-     * 生成随机用户名
-     *
-     * @return 随机用户名
-     */
-    private String generateRandomUsername() {
-        int length = (int) (Math.random() * 13) + 4; // 生成 4 到 16 位的随机长度
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder username = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            int index = (int) (Math.random() * characters.length());
-            username.append(characters.charAt(index));
-        }
-        return username.toString();
-    }
 }
