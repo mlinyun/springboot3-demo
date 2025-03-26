@@ -26,10 +26,10 @@ public interface UserDao {
     /**
      * 根据用户名查询用户
      *
-     * @param name 用户名
+     * @param username 用户名
      * @return 用户对象，如果不存在则返回 null
      */
-    User findUserByName(@Param("name") String name);
+    User findUserByName(@Param("username") String username);
 
     /**
      * 添加用户

@@ -34,31 +34,29 @@ public class MyBatisController {
 
     // 新增用户
     @GetMapping("/users/addUser")
-    public Boolean addUser(@RequestParam(value = "name", required = true) String name,
+    public Boolean addUser(@RequestParam(value = "username", required = true) String username,
                            @RequestParam(value = "password", required = true) String password) {
         // 判断参数是否为空
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(password)) {
+        if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
             return false;
         }
         // 判断数据库中是否已经存在该用户
-        User existingUser = userDao.findUserByName(name);
+        User existingUser = userDao.findUserByName(username);
         if (existingUser != null) {
             return false;
         }
         // 新增用户
         User newUser = new User();
-        newUser.setName(name);
+        newUser.setUsername(username);
         newUser.setPassword(password);
         return userDao.addUser(newUser) > 0;
     }
 
     // 更新用户信息
     @GetMapping("/users/updateUser")
-    public Boolean updateUser(@RequestParam(value = "id", required = true) Integer id,
-                              @RequestParam(value = "name", required = true) String name,
-                              @RequestParam(value = "password", required = true) String password) {
+    public Boolean updateUser(@RequestParam(value = "id", required = true) Integer id, @RequestParam(value = "username", required = true) String username, @RequestParam(value = "password", required = true) String password) {
         // 判断参数是否为空
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(password)) {
+        if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
             return false;
         }
         // 校验 id 是否合法
@@ -71,7 +69,7 @@ public class MyBatisController {
             return false;
         }
         // 判断数据库中是否已经存在该用户名
-        User existingUserByName = userDao.findUserByName(name);
+        User existingUserByName = userDao.findUserByName(username);
         // 如果存在该用户名，且不是当前用户，则返回 false
         if (existingUserByName != null && !existingUserByName.getId().equals(id)) {
             return false;
@@ -79,7 +77,7 @@ public class MyBatisController {
         // 更新用户信息
         User updatedUser = new User();
         updatedUser.setId(id);
-        updatedUser.setName(name);
+        updatedUser.setUsername(username);
         updatedUser.setPassword(password);
         return userDao.updateUser(updatedUser) > 0;
     }

@@ -7,8 +7,9 @@ DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user`
 (
     `id`       INT(11)      NOT NULL AUTO_INCREMENT COMMENT '主键',
-    `name`     VARCHAR(100) NOT NULL DEFAULT '' COMMENT '登录名',
+    `username`     VARCHAR(100) NOT NULL DEFAULT '' COMMENT '登录名',
     `password` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '密码',
+    `isDelete` TINYINT(1)   NOT NULL DEFAULT 0 COMMENT '是否删除',
     PRIMARY KEY (`id`)
 ) ENGINE = INNODB
   AUTO_INCREMENT = 1

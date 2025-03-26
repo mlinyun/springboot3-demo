@@ -6,37 +6,38 @@
 
     <resultMap id="UserResult" type="com.mlinyun.springboot3demo.entity.User">
         <id property="id" column="id" jdbcType="INTEGER"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
     </resultMap>
 
     <select id="findAllUsers" resultMap="UserResult">
-        select id, name, password
+        select id, username, password, isDelete
         from tb_user
         order by id desc
     </select>
 
     <select id="findUserById" parameterType="java.lang.Integer" resultMap="UserResult">
-        select id, name, password
+        select id, username, password, isDelete
         from tb_user
         where id = #{id}
     </select>
 
     <select id="findUserByName" parameterType="java.lang.String" resultMap="UserResult">
-        select id, name, password
+        select id, username, password, isDelete
         from tb_user
-        where name = #{name}
+        where username = #{username}
     </select>
 
     <insert id="addUser" parameterType="com.mlinyun.springboot3demo.entity.User" useGeneratedKeys="true"
             keyProperty="id">
-        insert into tb_user(name, password)
-        values (#{name}, #{password})
+        insert into tb_user(username, password)
+        values (#{username}, #{password})
     </insert>
 
     <update id="updateUser" parameterType="com.mlinyun.springboot3demo.entity.User">
         update tb_user
-        set name     = #{name},
+        set username = #{username},
             password = #{password}
         where id = #{id}
     </update>
