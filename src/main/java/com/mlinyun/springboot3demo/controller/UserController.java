@@ -39,10 +39,7 @@ public class UserController {
     @PostMapping("/register")
     @Operation(summary = "用户注册", description = "根据用户名和密码创建新用户")
     @Parameter(name = "userRegisterOrLoginRequest", description = "用户注册请求对象", required = true)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "注册成功，返回用户 ID"),
-            @ApiResponse(responseCode = "400", description = "请求参数有误", content = @Content)
-    })
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "注册成功，返回用户 ID"), @ApiResponse(responseCode = "400", description = "请求参数有误", content = @Content)})
     public long register(@RequestBody UserRegisterOrLoginRequest userRegisterOrLoginRequest) {
         if (userRegisterOrLoginRequest == null) {
             return -1;
@@ -63,15 +60,8 @@ public class UserController {
      */
     @PostMapping("/login")
     @Operation(summary = "用户登录", description = "根据用户名和密码进行登录验证")
-    @Parameters({
-            @Parameter(name = "userRegisterOrLoginRequest", description = "用户登录请求对象", required = true),
-            @Parameter(name = "request", description = "请求对象", required = true)
-    })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "登录成功，返回用户信息"),
-            @ApiResponse(responseCode = "400", description = "请求参数有误", content = @Content),
-            @ApiResponse(responseCode = "401", description = "登录失败", content = @Content)
-    })
+    @Parameters({@Parameter(name = "userRegisterOrLoginRequest", description = "用户登录请求对象", required = true), @Parameter(name = "request", description = "请求对象", required = true)})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "登录成功，返回用户信息"), @ApiResponse(responseCode = "400", description = "请求参数有误", content = @Content), @ApiResponse(responseCode = "401", description = "登录失败", content = @Content)})
     public TbUser login(@RequestBody UserRegisterOrLoginRequest userRegisterOrLoginRequest, HttpServletRequest request) {
         if (userRegisterOrLoginRequest == null) {
             return null;
@@ -93,15 +83,8 @@ public class UserController {
      */
     @PostMapping("/delete")
     @Operation(summary = "删除用户", description = "根据用户 ID 删除指定用户")
-    @Parameters({
-            @Parameter(name = "userDeleteRequest", description = "用户删除请求对象", required = true),
-            @Parameter(name = "request", description = "请求对象", required = true)
-    })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "删除成功"),
-            @ApiResponse(responseCode = "400", description = "请求参数有误", content = @Content),
-            @ApiResponse(responseCode = "403", description = "无权限删除", content = @Content)
-    })
+    @Parameters({@Parameter(name = "userDeleteRequest", description = "用户删除请求对象", required = true), @Parameter(name = "request", description = "请求对象", required = true)})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "删除成功"), @ApiResponse(responseCode = "400", description = "请求参数有误", content = @Content), @ApiResponse(responseCode = "403", description = "无权限删除", content = @Content)})
     public boolean delete(@RequestBody UserDeleteRequest userDeleteRequest, HttpServletRequest request) {
         // 非空判断
         if (userDeleteRequest == null) {
@@ -120,10 +103,7 @@ public class UserController {
     @PostMapping("/update")
     @Operation(summary = "更新用户信息", description = "根据用户对象更新用户信息")
     @Parameter(name = "user", description = "用户对象", required = true)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "更新成功"),
-            @ApiResponse(responseCode = "400", description = "请求参数有误", content = @Content)
-    })
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "更新成功"), @ApiResponse(responseCode = "400", description = "请求参数有误", content = @Content)})
     public boolean updateUser(@RequestBody TbUser user) {
         return tbUserService.updateUser(user);
     }
@@ -137,14 +117,8 @@ public class UserController {
      */
     @GetMapping("/search")
     @Operation(summary = "查询用户", description = "根据用户名模糊查询用户信息")
-    @Parameters({
-            @Parameter(name = "username", description = "用户名", required = true),
-            @Parameter(name = "request", description = "请求对象", required = true)
-    })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "查询成功"),
-            @ApiResponse(responseCode = "403", description = "无权限查询", content = @Content)
-    })
+    @Parameters({@Parameter(name = "username", description = "用户名", required = true), @Parameter(name = "request", description = "请求对象", required = true)})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "查询成功"), @ApiResponse(responseCode = "403", description = "无权限查询", content = @Content)})
     public List<TbUser> searchUsers(@RequestParam(value = "username", required = true) String username, HttpServletRequest request) {
         return tbUserService.searchUsers(username, request);
     }
@@ -158,10 +132,7 @@ public class UserController {
     @GetMapping("/currentUser")
     @Operation(summary = "获取当前用户信息", description = "获取当前登录用户的详细信息")
     @Parameter(name = "request", description = "请求对象", required = true)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "获取成功"),
-            @ApiResponse(responseCode = "401", description = "未登录", content = @Content)
-    })
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "获取成功"), @ApiResponse(responseCode = "401", description = "未登录", content = @Content)})
     public TbUser getCurrentUser(HttpServletRequest request) {
         if (request == null) {
             return null;
@@ -178,10 +149,7 @@ public class UserController {
     @PostMapping("/logout")
     @Operation(summary = "用户注销", description = "退出当前用户登录状态")
     @Parameter(name = "request", description = "请求对象", required = true)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "注销成功"),
-            @ApiResponse(responseCode = "400", description = "注销失败", content = @Content)
-    })
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "注销成功"), @ApiResponse(responseCode = "400", description = "注销失败", content = @Content)})
     public boolean logout(HttpServletRequest request) {
         if (request == null) {
             return false;
