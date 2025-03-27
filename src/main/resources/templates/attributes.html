@@ -6,7 +6,7 @@
 </head>
 
 <!-- background 标签-->
-<body th:background="${th_background}" background="#D0D0D0">
+<body background="#D0D0D0" th:background="${th_background}">
 <!-- text 标签-->
 <h1 th:text="${title}">html标签演示</h1>
 <div>
@@ -15,17 +15,17 @@
     <input
             id="input1"
             name="input1"
-            value="1"
             th:id="${th_id}"
             th:name="${th_name}"
             th:value="${th_value}"
+            value="1"
     />
 </div>
 <br/>
 <div class="div1" th:class="${th_class}">
     <h5>class、href标签:</h5>
     <!-- class、href标签-->
-    <a th:href="${th_href}" href="https://gitbook.cn/">链接地址</a>
+    <a href="https://gitbook.cn/" th:href="${th_href}">链接地址</a>
 </div>
 </body>
 </html>

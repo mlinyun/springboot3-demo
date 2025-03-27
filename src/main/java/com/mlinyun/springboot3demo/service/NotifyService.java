@@ -12,4 +12,5 @@ public class NotifyService {
         // to do something
         // 可以在该方法里写上逻辑代码，定时任务会定时调用该方法
     }
+
 }

@@ -14,6 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class Springboot3DemoApplicationTests {
 
+    // 注入数据源对象
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private DruidDataSource druidDataSource;
+
     @Test
     void contextLoads() {
     }
@@ -22,10 +28,6 @@ class Springboot3DemoApplicationTests {
     public void test() {
         System.out.println("Spring Boot Test");
     }
-
-    // 注入数据源对象
-    @Autowired
-    private DataSource dataSource;
 
     /**
      * 测试数据库连接
@@ -44,9 +46,6 @@ class Springboot3DemoApplicationTests {
         // 关闭连接
         connection.close();
     }
-
-    @Autowired
-    private DruidDataSource druidDataSource;
 
     @Test
     public void testDruidConfigurations() {

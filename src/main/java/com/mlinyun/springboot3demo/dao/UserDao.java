@@ -1,7 +1,8 @@
 package com.mlinyun.springboot3demo.dao;
 
 import com.mlinyun.springboot3demo.entity.User;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

@@ -38,4 +38,5 @@ public class ErrorPageController implements ErrorViewResolver {
             return new ModelAndView("error/error_5xx");
         }
     }
+
 }

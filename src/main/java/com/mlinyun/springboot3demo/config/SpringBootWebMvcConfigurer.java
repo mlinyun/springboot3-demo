@@ -17,4 +17,5 @@ public class SpringBootWebMvcConfigurer implements WebMvcConfigurer {
         registry.addResourceHandler("/files/**")
                 .addResourceLocations("file:" + fileUploadPath);
     }
+
 }

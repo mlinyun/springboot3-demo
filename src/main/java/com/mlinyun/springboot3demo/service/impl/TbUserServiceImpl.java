@@ -2,9 +2,9 @@ package com.mlinyun.springboot3demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mlinyun.springboot3demo.dao.TbUserMapper;
 import com.mlinyun.springboot3demo.entity.TbUser;
 import com.mlinyun.springboot3demo.service.TbUserService;
-import com.mlinyun.springboot3demo.dao.TbUserMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

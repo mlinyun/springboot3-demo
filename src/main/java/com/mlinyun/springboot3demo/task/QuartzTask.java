@@ -6,8 +6,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import java.util.Date;
-
 @RequiredArgsConstructor
 public class QuartzTask extends QuartzJobBean {
 
@@ -17,4 +15,5 @@ public class QuartzTask extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         notifyService.sendMessageToUser("QuartzTask 定时任务开始执行");
     }
+
 }

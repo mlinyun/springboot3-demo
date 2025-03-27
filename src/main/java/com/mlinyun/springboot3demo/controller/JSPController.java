@@ -12,4 +12,5 @@ public class JSPController {
         model.addAttribute("info", "Spring Boot 3 整合 JSP");
         return "hello";
     }
+
 }

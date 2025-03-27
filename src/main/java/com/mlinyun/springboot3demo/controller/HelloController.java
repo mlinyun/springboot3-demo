@@ -26,4 +26,5 @@ public class HelloController {
         logger.warn("这是一条 warn 级别的日志");
         return "日志打印";
     }
+
 }

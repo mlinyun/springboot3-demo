@@ -1,7 +1,7 @@
 package com.mlinyun.springboot3demo.dao;
 
-import com.mlinyun.springboot3demo.entity.TbUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mlinyun.springboot3demo.entity.TbUser;
 
 /**
  * @author LinCanhui
@@ -12,7 +12,3 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface TbUserMapper extends BaseMapper<TbUser> {
 
 }
-
-
-
-
