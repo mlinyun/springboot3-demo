@@ -184,9 +184,14 @@ jobs:
 
       - name: 生成日志更新
         id: changelog
-        uses: metcalfc/changelog-generator@v4.6.2
+        uses: mikepenz/release-changelog-builder-action@v4
         with:
-          mytoken: ${{ secrets.GITHUB_TOKEN }}
+          configuration: ".github/changelog-configuration.json"
+          ignorePreReleases: "false"
+          fetchReleaseInformation: "true"
+          failOnError: "false"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 创建发布
         uses: softprops/action-gh-release@v1

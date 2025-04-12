@@ -1,0 +1,36 @@
+{
+    "categories": [
+        {
+            "title": "## 🚀 新功能",
+            "labels": [
+                "feature",
+                "enhancement"
+            ]
+        },
+        {
+            "title": "## 🐛 Bug 修复",
+            "labels": [
+                "fix",
+                "bug"
+            ]
+        },
+        {
+            "title": "## 📝 文档更新",
+            "labels": [
+                "documentation"
+            ]
+        },
+        {
+            "title": "## 🔧 维护",
+            "labels": [
+                "chore",
+                "dependencies"
+            ]
+        }
+    ],
+    "template": "${{CHANGELOG}}",
+    "pr_template": "- ${{TITLE}} (#${{NUMBER}})",
+    "empty_template": "- 没有变更",
+    "max_pull_requests": 50,
+    "max_back_track_time_days": 60
+}
