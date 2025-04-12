@@ -46,7 +46,8 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-          --entrypoint "redis-server --requirepass 123456"
+        env:
+            REDIS_PASSWORD: 123456
 
     steps:
       - name: 检出代码
