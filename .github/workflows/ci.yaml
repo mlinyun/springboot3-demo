@@ -47,7 +47,7 @@ jobs:
           --health-timeout=5s
           --health-retries=3
         env:
-            REDIS_PASSWORD: 123456
+          REDIS_PASSWORD: 123456
 
     steps:
       - name: 检出代码
@@ -84,6 +84,8 @@ jobs:
 
       - name: 验证 Redis 连接
         run: |
+          sudo apt-get update
+          sudo apt-get install -y redis-tools
           redis-cli -h 127.0.0.1 -p 6379 -a 123456 ping
           echo "Redis 已就绪"
 
