@@ -184,9 +184,9 @@ jobs:
 
       - name: 生成日志更新
         id: changelog
-        uses: metcalfc/changelog-generator@v4.1.0
+        uses: metcalfc/changelog-generator@v4.6.2
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
+          mytoken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 创建发布
         uses: softprops/action-gh-release@v1
