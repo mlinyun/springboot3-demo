@@ -166,44 +166,44 @@ jobs:
       contents: write
       packages: write
 
-      steps:
-        - name: 检出代码
-          uses: actions/checkout@v4
-          with:
-            fetch-depth: 0  # 获取完整历史用于生成更新日志
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史用于生成更新日志
 
-        - name: 下载构建产物
-          uses: actions/download-artifact@v4
-          with:
-            name: springboot3-demo
-            path: ./target
+      - name: 下载构建产物
+        uses: actions/download-artifact@v4
+        with:
+          name: springboot3-demo
+          path: ./target
 
-        - name: 获取版本
-          id: get_version
-          run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+      - name: 获取版本
+        id: get_version
+        run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
 
-        - name: 生成日志更新
-          id: changelog
-          uses: metcalfc/changelog-generator@v4.1.0
-          with:
-            myToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: 生成日志更新
+        id: changelog
+        uses: metcalfc/changelog-generator@v4.1.0
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: 创建发布
-          uses: softprops/action-gh-release@v1
-          with:
-            name: v${{ steps.get_version.outputs.VERSION }}
-            tag_name: v${{ steps.get_version.outputs.VERSION }}
-            body: |
-              ## Spring Boot 3 Demo 项目发布 v${{ steps.get_version.outputs.VERSION }}
-              
-              ### 更新内容
-              ${{ steps.changelog.outputs.changelog }}
-              
-              ### 下载
-              - [SpringBoot3-Demo-${{ steps.get_version.outputs.VERSION }}.jar](https://github.com/${{ github.repository }}/releases/download/v${{ steps.get_version.outputs.VERSION }}/springboot3-demo-${{ steps.get_version.outputs.VERSION }}.jar)
-            draft: true  # 创建为草稿版本，可以在发布前进行最终检查
-            prerelease: false
-            files: |
-              ./target/*.jar
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 创建发布
+        uses: softprops/action-gh-release@v1
+        with:
+          name: v${{ steps.get_version.outputs.VERSION }}
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
+          body: |
+            ## Spring Boot 3 Demo 项目发布 v${{ steps.get_version.outputs.VERSION }}
+            
+            ### 更新内容
+            ${{ steps.changelog.outputs.changelog }}
+            
+            ### 下载
+            - [SpringBoot3-Demo-${{ steps.get_version.outputs.VERSION }}.jar](https://github.com/${{ github.repository }}/releases/download/v${{ steps.get_version.outputs.VERSION }}/springboot3-demo-${{ steps.get_version.outputs.VERSION }}.jar)
+          draft: true  # 创建为草稿版本，可以在发布前进行最终检查
+          prerelease: false
+          files: |
+            ./target/*.jar
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
