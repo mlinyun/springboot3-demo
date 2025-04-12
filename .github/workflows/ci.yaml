@@ -28,7 +28,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: 123456
-          MYSQL_DATABASE: springboot3_demo
+          MYSQL_DATABASE: springboot3_db
         ports:
           - 3306:3306
         options: >-
@@ -79,8 +79,21 @@ jobs:
 
       - name: 初始化数据库
         run: |
-          mysql -h 127.0.0.1 -P 3306 -u root -p123456 -e "SHOW DATABASES;"
-          echo "数据库 springboot3_demo 已创建"
+          echo "检查数据库是否创建..."
+          if mysql -h 127.0.0.1 -P 3306 -u root -p123456 -e "SHOW DATABASES LIKE 'springboot3_db';" | grep -q "springboot3_db"; then
+            echo "数据库 springboot3_db 已存在"
+          else
+            echo "创建数据库 springboot3_db..."
+            mysql -h 127.0.0.1 -P 3306 -u root -p123456 -e "CREATE DATABASE IF NOT EXISTS springboot3_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+            echo "数据库 springboot3_db 创建成功"
+          fi
+          
+          # 初始化表结构(如果有初始化SQL脚本)
+          if [ -f "sql/springboot3-demo.sql" ]; then
+            echo "导入数据库表结构..."
+          mysql -h 127.0.0.1 -P 3306 -u root -p123456 springboot3_db < sql/springboot3-demo.sql
+            echo "表结构导入完成"
+          fi
 
       - name: 验证 Redis 连接
         run: |
@@ -98,7 +111,7 @@ jobs:
       - name: 单元测试
         run: mvn test
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/springboot3_demo?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/springboot3_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: 123456
           SPRING_DATA_REDIS_HOST: localhost
