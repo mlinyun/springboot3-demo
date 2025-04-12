@@ -31,7 +31,18 @@ class Springboot3DemoApplicationTests {
 
     /**
      * 测试数据库连接
-     * 尝试获取数据库连接对象，如果获取成功，则说明数据库连接正常
+     *
+     * <p>该测试用例用于验证应用程序是否能够成功连接到配置的数据库。</p>
+     * <p>测试步骤：</p>
+     * <ol>
+     *   <li>获取并打印默认数据源类型</li>
+     *   <li>尝试获取数据库连接对象</li>
+     *   <li>验证连接对象不为空</li>
+     *   <li>检查连接是否有效（设置超时时间为1秒）</li>
+     *   <li>关闭数据库连接</li>
+     * </ol>
+     *
+     * @throws SQLException 如果数据库连接过程中发生SQL异常
      */
     @Test
     public void testDatabaseConnection() throws SQLException {
