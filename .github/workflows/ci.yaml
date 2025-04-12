@@ -22,7 +22,32 @@ jobs:
   build:
     name: 构建和测试
     runs-on: ubuntu-latest
-    
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_DATABASE: springboot3_demo
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      redis:
+        image: redis:7.4
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        command: [ "redis-server", "--requirepass", "123456" ]
+
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
@@ -43,6 +68,24 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: 等待 MySQL 准备就绪
+        run: |
+          while ! mysqladmin ping -h"127.0.0.1" -P"3306" --silent; do
+            echo "等待 MySQL 启动..."
+            sleep 2
+          done
+          echo "MySQL 已就绪"
+
+      - name: 初始化数据库
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root -p123456 -e "SHOW DATABASES;"
+          echo "数据库 springboot3_demo 已创建"
+
+      - name: 验证 Redis 连接
+        run: |
+          redis-cli -h 127.0.0.1 -p 6379 -a 123456 ping
+          echo "Redis 已就绪"
+
       - name: 代码风格检查
         run: mvn checkstyle:check
 
@@ -51,6 +94,13 @@ jobs:
 
       - name: 单元测试
         run: mvn test
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/springboot3_demo?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: 123456
+          SPRING_DATA_REDIS_HOST: localhost
+          SPRING_DATA_REDIS_PORT: 6379
+          SPRING_DATA_REDIS_PASSWORD: 123456
 
       - name: SonarQube 代码质量分析
         if: ${{ github.event_name != 'pull_request' && false }}  # 默认禁用，需要时启用
@@ -75,7 +125,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true' }}
-    
+
     steps:
       - name: 下载构建产物
         uses: actions/download-artifact@v4
@@ -96,21 +146,21 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
-    
+
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
-        
+
       - name: 下载构建产物
         uses: actions/download-artifact@v4
         with:
           name: springboot3-demo
           path: ./target
-          
+
       - name: 获取版本
         id: get_version
         run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
-        
+
       - name: 创建发布
         if: false  # 默认禁用，需要时启用
         uses: softprops/action-gh-release@v1
