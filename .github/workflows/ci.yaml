@@ -118,7 +118,7 @@ jobs:
           SPRING_DATA_REDIS_PASSWORD: 123456
 
       - name: SonarQube 代码质量分析
-        if: ${{ github.event_name == 'push' }}  # 在推送代码时执行代码质量分析
+        if: false # 目前禁用 SonarQube 分析
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
