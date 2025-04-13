@@ -1,5 +1,4 @@
 name: Spring Boot CI/CD Workflow
-description: 用于 Spring Boot 应用程序的 CI/CD 工作流
 run-name: ${{ github.actor }} 正在运行 CI/CD 工作流 - ${{ github.event_name }}
 
 on:
@@ -173,6 +172,15 @@ jobs:
           fromTag: ${{ github.event.repository.default_branch }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 调试标签信息
+        run: |
+          echo "当前分支: ${{ github.ref }}"
+          echo "当前SHA: ${{ github.sha }}"
+          echo "最新标签:"
+          git describe --tags $(git rev-list --tags --max-count=1) || echo "没有标签"
+          echo "所有标签:"
+          git tag -l || echo "没有标签"
 
       - name: 创建发布
         if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name != 'workflow_dispatch' }}
