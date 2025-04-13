@@ -90,7 +90,7 @@ jobs:
           # 初始化表结构(如果有初始化SQL脚本)
           if [ -f "sql/springboot3-demo.sql" ]; then
             echo "导入数据库表结构..."
-          mysql -h 127.0.0.1 -P 3306 -u root -p123456 springboot3_db < sql/springboot3-demo.sql
+            mysql -h 127.0.0.1 -P 3306 -u root -p123456 springboot3_db < sql/springboot3-demo.sql
             echo "表结构导入完成"
           fi
 
@@ -160,27 +160,28 @@ jobs:
         id: get_version
         run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
 
+      - name: 获取比较点
+        id: get_comparison_point
+        run: |
+          # 获取当前分支最早的提交作为比较起点
+          FIRST_COMMIT=$(git rev-list --max-parents=0 HEAD)
+          # 获取最近的10个提交作为比较范围
+          RECENT_COMMIT=$(git rev-parse HEAD~10 2>/dev/null || echo "$FIRST_COMMIT")
+          echo "比较点: $RECENT_COMMIT"
+          echo "compare_point=$RECENT_COMMIT" >> $GITHUB_OUTPUT
+
       - name: 生成日志更新
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v4
         with:
           configuration: ".github/changelog-configuration.json"
           ignorePreReleases: "false"
-          fetchReleaseInformation: "true"
+          fetchReleaseInformation: "false"
           failOnError: "false"
-          toTag: ${{ github.ref }}
-          fromTag: ${{ github.event.repository.default_branch }}
+          toTag: ${{ github.sha }}
+          fromTag: ${{ steps.get_comparison_point.outputs.compare_point }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 调试标签信息
-        run: |
-          echo "当前分支: ${{ github.ref }}"
-          echo "当前SHA: ${{ github.sha }}"
-          echo "最新标签:"
-          git describe --tags $(git rev-list --tags --max-count=1) || echo "没有标签"
-          echo "所有标签:"
-          git tag -l || echo "没有标签"
 
       - name: 创建发布
         if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name != 'workflow_dispatch' }}
