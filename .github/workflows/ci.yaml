@@ -118,7 +118,7 @@ jobs:
           SPRING_DATA_REDIS_PASSWORD: 123456
 
       - name: SonarQube 代码质量分析
-        if: ${{ github.event_name != 'pull_request' && false }}  # 默认禁用，需要时启用
+        if: ${{ github.event_name == 'push' }}  # 在推送代码时执行代码质量分析
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -180,6 +180,8 @@ jobs:
           failOnError: "false"
           toTag: ${{ github.sha }}
           fromTag: ${{ steps.get_comparison_point.outputs.compare_point }}
+          # 设置为提交模式，不再依赖 PR
+          commitMode: "true"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

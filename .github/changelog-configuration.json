@@ -1,36 +1,94 @@
 {
     "categories": [
         {
-            "title": "## 🚀 新功能",
+            "title": "## 🚀 功能",
             "labels": [
-                "feature",
-                "enhancement"
+                "feature"
+            ],
+            "commits": [
+                "^feat"
             ]
         },
         {
-            "title": "## 🐛 Bug 修复",
+            "title": "## 🐛 修复",
             "labels": [
-                "fix",
-                "bug"
+                "fix"
+            ],
+            "commits": [
+                "^fix"
             ]
         },
         {
-            "title": "## 📝 文档更新",
+            "title": "## 🧪 测试",
             "labels": [
-                "documentation"
+                "test"
+            ],
+            "commits": [
+                "^test"
             ]
         },
         {
-            "title": "## 🔧 维护",
+            "title": "## 📦 构建",
             "labels": [
-                "chore",
+                "build"
+            ],
+            "commits": [
+                "^build"
+            ]
+        },
+        {
+            "title": "## 📝 文档",
+            "labels": [
+                "docs"
+            ],
+            "commits": [
+                "^docs"
+            ]
+        },
+        {
+            "title": "## 🔄 重构",
+            "labels": [
+                "refactor"
+            ],
+            "commits": [
+                "^refactor"
+            ]
+        },
+        {
+            "title": "## 💄 样式",
+            "labels": [
+                "style"
+            ],
+            "commits": [
+                "^style"
+            ]
+        },
+        {
+            "title": "## 🔧 配置",
+            "labels": [
+                "chore"
+            ],
+            "commits": [
+                "^chore"
+            ]
+        },
+        {
+            "title": "## 其他更新",
+            "labels": [
+                "other"
+            ],
+            "exclude_labels": [
                 "dependencies"
+            ],
+            "commits": [
+                ".*"
             ]
         }
     ],
-    "template": "${{CHANGELOG}}",
+    "template": "${{CHANGELOG}}\n\n<details>\n<summary>所有提交</summary>\n\n${{COMMITS}}\n</details>",
     "pr_template": "- ${{TITLE}} (#${{NUMBER}})",
-    "empty_template": "- 没有变更",
-    "max_pull_requests": 50,
-    "max_back_track_time_days": 60
+    "commit_template": "- ${{SUBJECT}}",
+    "empty_template": "- 无明显更新",
+    "max_commits_to_display": 20,
+    "trim_values": true
 }
